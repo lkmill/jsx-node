@@ -1,0 +1,26 @@
+{
+  "name": "ssjsx",
+  "version": "0.0.1",
+  "description": "Server Side JSX",
+  "main": "node-require.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lohfu/ssjsx.git"
+  },
+  "author": "Linus Miller <lohfu@lohfu.io> (https://lohfu.io/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lohfu/ssjsx/issues"
+  },
+  "homepage": "https://github.com/lohfu/ssjsx#readme",
+  "dependencies": {
+    "babel-core": "^6.17.0",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-transform-react-jsx": "^6.8.0",
+    "babel-preset-es2015-node6": "^0.3.0",
+    "babylon": "^6.12.0"
+  }
+}
