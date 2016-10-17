@@ -13,7 +13,7 @@ module.exports = function (babel) {
         let start = t.stringLiteral(`<${tagName}`);
 
         if (node.arguments[1]) {
-          start = t.binaryExpression('+', start, t.callExpression(t.identifier('props'), [node.arguments[1]]));
+          start = t.binaryExpression('+', start, t.callExpression(t.identifier('P'), [node.arguments[1]]));
         }
 
         start = t.binaryExpression('+', start, t.stringLiteral('>'));
@@ -26,7 +26,7 @@ module.exports = function (babel) {
             let convertedNode = convertNode(child);
 
             if (convertedNode.type === 'Identifier') {
-              convertedNode = t.callExpression(t.identifier('output'), [ convertedNode ]);
+              convertedNode = t.callExpression(t.identifier('O'), [ convertedNode ]);
             }
 
             start = t.binaryExpression('+', start, convertedNode);
@@ -38,15 +38,15 @@ module.exports = function (babel) {
         return t.binaryExpression('+', start, end);
       }
 
-      return t.callExpression(t.identifier('output'), node.arguments);
+      return t.callExpression(t.identifier('O'), node.arguments);
     } else if (node.type === 'LogicalExpression' || node.type === 'MemberExpression') {
       // TODO remember what LogicalExpression is
-      // wrap MemberExpressions (eg. `this.member`) in call to `output` helper
-      return t.callExpression(t.identifier('output'), [ node ]);
+      // wrap MemberExpressions (eg. `this.member`) in call to `O` helper
+      return t.callExpression(t.identifier('O'), [ node ]);
     } else if (node.type === 'CallExpression' && node.callee.type === 'MemberExpression') {
       // wrap CallExpressions where callee is MemberExpressions (eg `this.place.map((room) => 'sucks'))`)
       // in call to `output` helper
-      return t.callExpression(t.identifier('output'), [ node ]);
+      return t.callExpression(t.identifier('O'), [ node ]);
     }
 
     // simply return the node as is
@@ -67,7 +67,7 @@ module.exports = function (babel) {
 
           // insert helpers at the top of each jsx file
           node.body.unshift(
-            babylon.parse('const { props, output } = require("njsx/helpers");\n\n').program.body[0]
+            babylon.parse('const { props: P, output: O } = require("njsx/helpers");\n\n').program.body[0]
           );
         },
       },
