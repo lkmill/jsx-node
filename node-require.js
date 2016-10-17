@@ -25,7 +25,7 @@ exports.install = function ({ extension, presets, plugins } = defaultOptions) {
       plugins: [
         ...plugins,
         ['transform-react-jsx', { pragma: 'h' }],
-        'ssjsx/babel',
+        'njsx/babel',
       ],
     });
 

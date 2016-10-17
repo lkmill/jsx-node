@@ -1,6 +1,6 @@
-# ssjsx
+# njsx: Node JSX
 
-Server Side JSX
+Use JSX as a template engine in Node.
 
 This module enables requiring `.jsx` files in Node. It does this by using
 [babel](https://github.com/babel/babel) and
@@ -22,7 +22,7 @@ to tell Node what to do with them. Running the following code makes you
 able to `require('./SomeFile.jsx')`:
 
 ```js
-require('ssjsx/node-require').install(options);
+require('njsx/node-require').install(options);
 ```
 
 As you can see, you are able to pass some options. The default options are:
@@ -58,7 +58,7 @@ nowhere else.
 'use strict';
 
 // make node understand `*.jsx` files
-require('ssjsx/node-require').install();
+require('njsx/node-require').install();
 
 const chalk = require('chalk');
 const express = require('express');
