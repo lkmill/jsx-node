@@ -2,10 +2,11 @@
 
 const _ = require('lodash');
 const babylon = require('babylon');
-
+const config = require('./config');
 
 module.exports = function (babel) {
   const t = babel.types;
+
 
   function merge(n1, n2) {
     if (n1.type === 'BinaryExpression' && n2.type === 'BinaryExpression') {
@@ -138,11 +139,31 @@ module.exports = function (babel) {
   return {
     visitor: {
       CallExpression(path) {
-        if (path.node.type === 'CallExpression' && path.node.callee.name === 'h') {
-          // only start conversion on h() calls, should always be root h call in here
-          path.replaceWith(convertNode(path.node));
+        const node = path.node;
+
+        if (node.type === 'CallExpression') {
+          if (node.callee.name === 'h') {
+            // only start conversion on h() calls, should always be root h call in here
+            path.replaceWith(convertNode(node));
+          } else if (
+            config && config.replace &&
+            node.callee.type === 'Identifier' &&
+            node.callee.name === 'require' &&
+            node.arguments.length === 1 &&
+            node.arguments[0].type === 'StringLiteral'
+          ) {
+            const keys = Object.keys(config.replace);
+
+            const found = keys.find((key) => node.arguments[0].value.startsWith(key));
+
+            if (found) {
+              const pathArray = node.arguments[0].value.split('/').slice(1);
+              node.arguments[0].value = config.replace[found] + (pathArray.length ? `/${pathArray.join('/')}` : '');
+            }
+          }
         }
       },
+
       Program: {
         enter(path, parent) {
           const node = path.node;
