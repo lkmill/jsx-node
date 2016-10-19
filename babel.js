@@ -1,9 +1,91 @@
 'use strict';
 
+const _ = require('lodash');
 const babylon = require('babylon');
+
 
 module.exports = function (babel) {
   const t = babel.types;
+
+  function merge(n1, n2) {
+    if (n1.type === 'BinaryExpression' && n2.type === 'BinaryExpression') {
+      if (n1.right.type === 'StringLiteral' && n2.left.type === 'StringLiteral') {
+        n1.right.value += n2.left.value;
+
+        return t.binaryExpression('+', n1, n2.right);
+      }
+
+      let right = n1.right;
+
+      while (right.type === 'BinaryExpression') {
+        right = right.right;
+      }
+
+      let left = n2.left;
+      let parent = n2;
+      let grandpa = n2.parent;
+
+      while (left.type === 'BinaryExpression') {
+        grandpa = parent;
+        parent = left;
+        left = left.left;
+      }
+
+      if (right.type === 'StringLiteral' && left.type === 'StringLiteral') {
+        right.value += left.value;
+
+        if (grandpa) {
+          grandpa.left = parent.right;
+        } else {
+          left.value = '';
+        }
+      }
+    } else if (n1.type === 'StringLiteral' && n2.type === 'BinaryExpression' && n2.left.type === 'StringLiteral') {
+      if (n2.left.type === 'StringLiteral') {
+        return t.binaryExpression('+', t.stringLiteral(n1.value + n2.left.value), n2.right);
+      }
+
+      let left = n2.left;
+      let parent = n2;
+      let grandpa = n2.parent;
+
+      while (left.type === 'BinaryExpression') {
+        grandpa = parent;
+        parent = left;
+        left = left.left;
+      }
+
+      if (left.type === 'StringLiteral') {
+        n1.value += left.value;
+
+        if (grandpa) {
+          grandpa.left = parent.right;
+        } else {
+          left.value = '';
+        }
+      }
+    } else if (n1.type === 'BinaryExpression' && n2.type === 'StringLiteral') {
+      if (n1.right.type === 'StringLiteral') {
+        return t.binaryExpression('+', n1.left, t.stringLiteral(n1.right.value + n2.value));
+      }
+
+      let right = n1.right;
+
+      while (right.type === 'BinaryExpression') {
+        right = right.right;
+      }
+
+      if (right.type === 'StringLiteral') {
+        right.value += n2.value;
+
+        return n1;
+      }
+    } else if (n1.type === 'StringLiteral' && n2.type === 'StringLiteral') {
+      return t.stringLiteral(n1.value + n2.value);
+    }
+
+    return t.binaryExpression('+', n1, n2);
+  }
 
   function convertNode(node) {
     if (node.type === 'CallExpression' && node.callee.name === 'h') {
@@ -13,10 +95,10 @@ module.exports = function (babel) {
         let start = t.stringLiteral(`<${tagName}`);
 
         if (node.arguments[1]) {
-          start = t.binaryExpression('+', start, t.callExpression(t.identifier('P'), [node.arguments[1]]));
+          start = merge(start, t.callExpression(t.identifier('P'), [node.arguments[1]]));
         }
 
-        start = t.binaryExpression('+', start, t.stringLiteral('>'));
+        start = merge(start, t.stringLiteral('>'));
 
         const children = node.arguments.slice(2);
 
@@ -29,13 +111,13 @@ module.exports = function (babel) {
               convertedNode = t.callExpression(t.identifier('O'), [ convertedNode ]);
             }
 
-            start = t.binaryExpression('+', start, convertedNode);
+            start = merge(start, convertedNode);
           }
         }
 
         const end = t.stringLiteral(`</${tagName}>`);
 
-        return t.binaryExpression('+', start, end);
+        return merge(start, end);
       }
 
       return t.callExpression(t.identifier('O'), node.arguments);
