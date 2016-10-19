@@ -94,7 +94,7 @@ module.exports = function (babel) {
 
         let start = t.stringLiteral(`<${tagName}`);
 
-        if (node.arguments[1]) {
+        if (node.arguments[1] && node.arguments[1].type !== 'NullLiteral') {
           start = merge(start, t.callExpression(t.identifier('P'), [node.arguments[1]]));
         }
 
