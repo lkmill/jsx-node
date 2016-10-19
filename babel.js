@@ -1,12 +1,10 @@
 'use strict';
 
-const _ = require('lodash');
 const babylon = require('babylon');
 const config = require('./config');
 
 module.exports = function (babel) {
   const t = babel.types;
-
 
   function merge(n1, n2) {
     if (n1.type === 'BinaryExpression' && n2.type === 'BinaryExpression') {
@@ -104,15 +102,18 @@ module.exports = function (babel) {
         const children = node.arguments.slice(2);
 
         if (children.length) {
-          let child;
-          while (child = children.shift()) {
+          let child = children.shift();
+
+          while (child) {
             let convertedNode = convertNode(child);
 
             if (convertedNode.type === 'Identifier') {
-              convertedNode = t.callExpression(t.identifier('O'), [ convertedNode ]);
+              convertedNode = t.callExpression(t.identifier('O'), [convertedNode]);
             }
 
             start = merge(start, convertedNode);
+
+            child = children.shift();
           }
         }
 
@@ -125,11 +126,11 @@ module.exports = function (babel) {
     } else if (node.type === 'LogicalExpression' || node.type === 'MemberExpression') {
       // TODO remember what LogicalExpression is
       // wrap MemberExpressions (eg. `this.member`) in call to `O` helper
-      return t.callExpression(t.identifier('O'), [ node ]);
+      return t.callExpression(t.identifier('O'), [node]);
     } else if (node.type === 'CallExpression' && node.callee.type === 'MemberExpression') {
-      // wrap CallExpressions where callee is MemberExpressions (eg `this.place.map((room) => 'sucks'))`)
-      // in call to `output` helper
-      return t.callExpression(t.identifier('O'), [ node ]);
+      // wrap CallExpressions where callee is MemberExpressions (eg
+      // `this.place.map((room) => 'sucks'))`) in call to `output` helper
+      return t.callExpression(t.identifier('O'), [node]);
     }
 
     // simply return the node as is
@@ -165,7 +166,7 @@ module.exports = function (babel) {
       },
 
       Program: {
-        enter(path, parent) {
+        enter(path) {
           const node = path.node;
 
           // insert helpers at the top of each jsx file
