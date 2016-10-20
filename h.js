@@ -1,3 +1,3 @@
 'use strict';
 
-module.exports = (tag, attrs, ...children) => '';
+module.exports = require('hyperscript-jsx/string');

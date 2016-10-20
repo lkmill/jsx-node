@@ -21,6 +21,7 @@
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-transform-react-jsx": "^6.8.0",
     "babel-preset-es2015-node6": "^0.3.0",
-    "babylon": "^6.12.0"
+    "babylon": "^6.12.0",
+    "hyperscript-jsx": "0.0.1"
   }
 }
