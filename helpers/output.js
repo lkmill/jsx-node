@@ -15,6 +15,7 @@ module.exports = function output(obj, ...args) {
   } else if (obj.prototype && obj.prototype.constructor && obj.prototype.render) {
     // should be a Component instance, create a new instance and return the
     // result of render
+    // eslint-disable-next-line new-cap
     const instance = new obj(Object.assign({}, args[0], { children: args.slice(1) }));
     return instance.render(instance.props, instance.state) || '';
   } else if (typeof obj === 'function') {

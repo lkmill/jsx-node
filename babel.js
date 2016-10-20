@@ -171,7 +171,7 @@ module.exports = function (babel) {
 
           // insert helpers at the top of each jsx file
           node.body.unshift(
-            babylon.parse('const { attributes: A, output: O } = require("njsx/helpers");\n\n').program.body[0]
+            babylon.parse('const { attributes: A, output: O } = require("jsx-node/helpers");\n\n').program.body[0]
           );
         },
       },

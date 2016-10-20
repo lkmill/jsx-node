@@ -3,6 +3,6 @@
 module.exports = {
   replace: {
     lowline: 'lodash',
-    preact: 'njsx',
-  }
+    preact: 'jsx-node',
+  },
 };

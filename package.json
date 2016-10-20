@@ -1,21 +1,23 @@
 {
-  "name": "njsx",
+  "name": "jsx-node",
   "version": "0.0.1",
   "description": "Use JSX as Node templating engine",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublish": "npm run lint"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lohfu/njsx.git"
+    "url": "git+https://github.com/lohfu/jsx-node.git"
   },
   "author": "Linus Miller <lohfu@lohfu.io> (https://lohfu.io/)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/lohfu/njsx/issues"
+    "url": "https://github.com/lohfu/jsx-node/issues"
   },
-  "homepage": "https://github.com/lohfu/njsx#readme",
+  "homepage": "https://github.com/lohfu/jsx-node#readme",
   "dependencies": {
     "babel-core": "^6.17.0",
     "babel-plugin-add-module-exports": "^0.2.1",

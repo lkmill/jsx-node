@@ -4,7 +4,7 @@ const babel = require('babel-core');
 
 const defaultOptions = {
   extension: '.jsx',
-  presets: [ 'es2015-node6' ],
+  presets: ['es2015-node6'],
   plugins: [
     'add-module-exports',
   ],
@@ -12,7 +12,7 @@ const defaultOptions = {
 
 exports.install = function ({ extension, presets, plugins } = defaultOptions) {
   if (extension.charAt(0) !== '.') {
-    extension = '.' + extension;
+    extension = `.${extension}`;
   }
 
   if (require.extensions[extension]) {
@@ -25,10 +25,11 @@ exports.install = function ({ extension, presets, plugins } = defaultOptions) {
       plugins: [
         ...plugins,
         ['transform-react-jsx', { pragma: 'h' }],
-        'njsx/babel',
+        'jsx-node/babel',
       ],
     });
 
+    // eslint-disable-next-line no-underscore-dangle
     module._compile(result.code, filename);
   };
 };

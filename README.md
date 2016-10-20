@@ -1,4 +1,4 @@
-# njsx: Node JSX
+# jsx-node: Node JSX
 
 Use JSX as a template engine in Node.
 
@@ -22,7 +22,7 @@ to tell Node what to do with them. Running the following code makes you
 able to `require('./SomeFile.jsx')`:
 
 ```js
-require('njsx/node-require').install(options);
+require('jsx-node/node-require').install(options);
 ```
 
 As you can see, you are able to pass some options. The default options are:
@@ -58,7 +58,7 @@ nowhere else.
 'use strict';
 
 // make node understand `*.jsx` files
-require('njsx/node-require').install();
+require('jsx-node/node-require').install();
 
 const chalk = require('chalk');
 const express = require('express');
