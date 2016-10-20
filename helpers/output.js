@@ -12,7 +12,7 @@ module.exports = function output(obj, ...args) {
   } else if (Array.isArray(obj)) {
     // recurse into arrays
     return obj.map((obj) => output(obj, ...args)).join('') || '';
-  } else if (obj.prototype && obj.prototype.render) {
+  } else if (obj.prototype && obj.prototype.constructor && obj.prototype.render) {
     // should be a Component instance, create a new instance and return the
     // result of render
     const instance = new obj(Object.assign({}, args[0], { children: args.slice(1) }));
