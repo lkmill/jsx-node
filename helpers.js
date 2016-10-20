@@ -2,5 +2,5 @@
 
 module.exports = {
   output: require('./helpers/output'),
-  props: require('./helpers/props'),
+  attributes: require('./helpers/attributes'),
 };

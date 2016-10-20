@@ -94,7 +94,7 @@ module.exports = function (babel) {
         let start = t.stringLiteral(`<${tagName}`);
 
         if (node.arguments[1] && node.arguments[1].type !== 'NullLiteral') {
-          start = merge(start, t.callExpression(t.identifier('P'), [node.arguments[1]]));
+          start = merge(start, t.callExpression(t.identifier('A'), [node.arguments[1]]));
         }
 
         start = merge(start, t.stringLiteral('>'));
@@ -171,7 +171,7 @@ module.exports = function (babel) {
 
           // insert helpers at the top of each jsx file
           node.body.unshift(
-            babylon.parse('const { props: P, output: O } = require("njsx/helpers");\n\n').program.body[0]
+            babylon.parse('const { attributes: A, output: O } = require("njsx/helpers");\n\n').program.body[0]
           );
         },
       },

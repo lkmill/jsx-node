@@ -3,7 +3,7 @@
 /*
  * Outputs objs into key="value" string
  */
-module.exports = function props(obj) {
+module.exports = function attributes(obj) {
   if (!obj) return '';
 
   let str = '';
