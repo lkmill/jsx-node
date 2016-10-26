@@ -6,7 +6,8 @@
   "scripts": {
     "lint": "eslint .",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepublish": "npm run lint"
+    "prepublish": "npm run lint",
+    "preversion": "npm run lint"
   },
   "repository": {
     "type": "git",
