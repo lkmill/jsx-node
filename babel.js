@@ -94,7 +94,7 @@ module.exports = function (babel) {
         let start = t.stringLiteral(`<${tagName}`);
 
         if (node.arguments[1] && node.arguments[1].type !== 'NullLiteral') {
-          start = merge(start, t.callExpression(t.identifier('A'), [node.arguments[1]]));
+          start = merge(start, t.callExpression(t.identifier('__a'), [node.arguments[1]]));
         }
 
         start = merge(start, t.stringLiteral('>'));
@@ -108,7 +108,7 @@ module.exports = function (babel) {
             let convertedNode = convertNode(child);
 
             if (convertedNode.type === 'Identifier') {
-              convertedNode = t.callExpression(t.identifier('O'), [convertedNode]);
+              convertedNode = t.callExpression(t.identifier('__o'), [convertedNode]);
             }
 
             start = merge(start, convertedNode);
@@ -122,15 +122,15 @@ module.exports = function (babel) {
         return merge(start, end);
       }
 
-      return t.callExpression(t.identifier('O'), node.arguments);
+      return t.callExpression(t.identifier('__o'), node.arguments);
     } else if (node.type === 'LogicalExpression' || node.type === 'MemberExpression') {
       // TODO remember what LogicalExpression is
       // wrap MemberExpressions (eg. `this.member`) in call to `O` helper
-      return t.callExpression(t.identifier('O'), [node]);
+      return t.callExpression(t.identifier('__o'), [node]);
     } else if (node.type === 'CallExpression' && node.callee.type === 'MemberExpression') {
       // wrap CallExpressions where callee is MemberExpressions (eg
       // `this.place.map((room) => 'sucks'))`) in call to `output` helper
-      return t.callExpression(t.identifier('O'), [node]);
+      return t.callExpression(t.identifier('__o'), [node]);
     }
 
     // simply return the node as is
@@ -171,7 +171,7 @@ module.exports = function (babel) {
 
           // insert helpers at the top of each jsx file
           node.body.unshift(
-            babylon.parse('const { attributes: A, output: O } = require("jsx-node/helpers");\n\n').program.body[0]
+            babylon.parse('const { attributes: __a, output: __o } = require("jsx-node/helpers");\n\n').program.body[0]
           );
         },
       },
