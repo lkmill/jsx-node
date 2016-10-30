@@ -2,15 +2,12 @@
 
 const babel = require('babel-core');
 
-const defaultOptions = {
-  extension: '.jsx',
-  presets: ['es2015-node6'],
-  plugins: [
-    'add-module-exports',
-  ],
-};
-
-exports.install = function ({ extension, presets, plugins } = defaultOptions) {
+exports.install = function ({
+  extension = '.jsx',
+  presets = ['es2015-node6'],
+  plugins = ['add-module-exports'],
+  replace,
+} = {}) {
   if (extension.charAt(0) !== '.') {
     extension = `.${extension}`;
   }
@@ -25,7 +22,7 @@ exports.install = function ({ extension, presets, plugins } = defaultOptions) {
       plugins: [
         ...plugins,
         ['transform-react-jsx', { pragma: 'h' }],
-        'jsx-node/babel',
+        ['jsx-node/babel', { replace }],
       ],
     });
 
