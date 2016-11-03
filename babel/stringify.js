@@ -138,29 +138,12 @@ module.exports = function (babel) {
 
   return {
     visitor: {
-      CallExpression(path, state) {
+      CallExpression(path) {
         const node = path.node;
 
-        if (node.type === 'CallExpression') {
-          if (node.callee.name === 'h') {
-            // only start conversion on h() calls, should always be root h call in here
-            path.replaceWith(convertNode(node));
-          } else if (
-            state.opts.replace &&
-            node.callee.type === 'Identifier' &&
-            node.callee.name === 'require' &&
-            node.arguments.length === 1 &&
-            node.arguments[0].type === 'StringLiteral'
-          ) {
-            const keys = Object.keys(state.opts.replace);
-
-            const found = keys.find((key) => node.arguments[0].value.startsWith(key));
-
-            if (found) {
-              const pathArray = node.arguments[0].value.split('/').slice(1);
-              node.arguments[0].value = state.opts.replace[found] + (pathArray.length ? `/${pathArray.join('/')}` : '');
-            }
-          }
+        if (node.type === 'CallExpression' && node.callee.name === 'h') {
+          // only start conversion on h() calls, should always be root h call in here
+          path.replaceWith(convertNode(node));
         }
       },
 

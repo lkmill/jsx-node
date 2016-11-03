@@ -20,7 +20,7 @@ const result = babel.transformFileSync(filename, {
   plugins: [
     ...defaultOptions.plugins,
     ['transform-react-jsx', { pragma: 'h' }],
-    require('../babel'),
+    require('../babel/stringify'),
   ],
 });
 

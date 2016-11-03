@@ -22,7 +22,7 @@ to tell Node what to do with them. Running the following code makes you
 able to `require('./SomeFile.jsx')`:
 
 ```js
-require('jsx-node/node-require').install({
+require('jsx-node').install({
   replace: {
     preact: 'jsx-node',
   }
