@@ -3,6 +3,9 @@
   "version": "0.0.4",
   "description": "Use JSX as Node templating engine",
   "main": "index.js",
+  "bin": {
+    "jsxc": "./bin/jsxc.js"
+  },
   "scripts": {
     "lint": "eslint .",
     "test": "echo \"Error: no test specified\" && exit 1",
