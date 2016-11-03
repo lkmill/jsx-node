@@ -22,7 +22,11 @@ to tell Node what to do with them. Running the following code makes you
 able to `require('./SomeFile.jsx')`:
 
 ```js
-require('jsx-node/node-require').install(options);
+require('jsx-node/node-require').install({
+  replace: {
+    preact: 'jsx-node',
+  }
+});
 ```
 
 As you can see, you are able to pass some options. The default options are:
@@ -49,6 +53,13 @@ only use stateless or ES6 class components.
 
 For ES6 Class Modules, make sure the initial state is set in the constructor and
 nowhere else.
+
+## Compatible With Preact
+
+This module is designed to be compatible with [Preact](https://github.com/developit/preact).
+
++ `className` prop is aliased to `class`, and `class` can be a plain object.
+  any keys with truthy values will be used as a class.
 
 ## Usage With Express
 
