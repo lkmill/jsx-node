@@ -7,19 +7,19 @@ module.exports = function () {
         const node = path.node;
 
         if (node.type === 'CallExpression'
-          && state.opts.replace
+          && state.opts
           && node.callee.type === 'Identifier'
           && node.callee.name === 'require'
           && node.arguments.length === 1
           && node.arguments[0].type === 'StringLiteral'
         ) {
-          const keys = Object.keys(state.opts.replace);
+          const keys = Object.keys(state.opts);
 
           const found = keys.find((key) => node.arguments[0].value.startsWith(key));
 
           if (found) {
             const pathArray = node.arguments[0].value.split('/').slice(1);
-            node.arguments[0].value = state.opts.replace[found] + (pathArray.length ? `/${pathArray.join('/')}` : '');
+            node.arguments[0].value = state.opts[found] + (pathArray.length ? `/${pathArray.join('/')}` : '');
           }
         }
       },
