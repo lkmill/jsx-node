@@ -2,6 +2,8 @@
 
 const babylon = require('babylon');
 
+const selfClosing = ['br', 'hr'];
+
 module.exports = function (babel) {
   const t = babel.types;
 
@@ -88,15 +90,17 @@ module.exports = function (babel) {
   function convertNode(node) {
     if (node.type === 'CallExpression' && node.callee.name === 'h') {
       if (node.arguments[0].type === 'StringLiteral') {
-        const tagName = node.arguments[0].value;
+        const tagName = node.arguments[0].value.toLowerCase();
 
-        let start = t.stringLiteral(`<${tagName}`);
+        const isSelfClosing = selfClosing.includes(tagName);
+
+        let tag = t.stringLiteral(`<${tagName}`);
 
         if (node.arguments[1] && node.arguments[1].type !== 'NullLiteral') {
-          start = merge(start, t.callExpression(t.identifier('__a'), [node.arguments[1]]));
+          tag = merge(tag, t.callExpression(t.identifier('__a'), [node.arguments[1]]));
         }
 
-        start = merge(start, t.stringLiteral('>'));
+        tag = merge(tag, t.stringLiteral(isSelfClosing ? '/>' : '>'));
 
         const children = node.arguments.slice(2);
 
@@ -110,15 +114,13 @@ module.exports = function (babel) {
               convertedNode = t.callExpression(t.identifier('__o'), [convertedNode]);
             }
 
-            start = merge(start, convertedNode);
+            tag = merge(tag, convertedNode);
 
             child = children.shift();
           }
         }
 
-        const end = t.stringLiteral(`</${tagName}>`);
-
-        return merge(start, end);
+        return isSelfClosing ? tag : merge(tag, t.stringLiteral(`</${tagName}>`));
       }
 
       return t.callExpression(t.identifier('__o'), node.arguments);
@@ -153,7 +155,7 @@ module.exports = function (babel) {
 
           // insert helpers at the top of each jsx file
           node.body.unshift(
-            babylon.parse('const { attributes: __a, output: __o } = require("jsx-node/helpers");\n\n').program.body[0]
+            babylon.parse('const { attributes: __a, output: __o } = require("jsx-node/helpers");\n\n').program.body[0],
           );
         },
       },
