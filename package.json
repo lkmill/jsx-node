@@ -7,9 +7,11 @@
     "jsxc": "./bin/jsxc.js"
   },
   "scripts": {
-    "lint": "eslint .",
+    "clean": "rimraf *.js helpers/ babel/ bin/",
+    "build": "babel src --out-dir .",
+    "lint": "eslint src",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepublish": "npm run lint",
+    "prepublish": "npm run lint && npm run clean && npm run build",
     "preversion": "npm run lint"
   },
   "repository": {
@@ -29,5 +31,13 @@
     "babel-preset-es2015-node6": "^0.3.0",
     "babylon": "^6.12.0",
     "hyperscript-jsx": "0.0.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-preset-es2015-node6": "^0.3.0",
+    "babel-preset-es2016": "^6.16.0",
+    "babel-preset-es2017": "^6.16.0",
+    "babel-preset-stage-0": "^6.16.0",
+    "rimraf": "^2.5.4"
   }
 }
