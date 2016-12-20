@@ -39,10 +39,10 @@ jspm_packages
 
 /*.js
 
+/babel
+
 /bin
 
 /dump
 
 /helpers
-
-/util
