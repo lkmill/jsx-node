@@ -1,6 +1,6 @@
 {
   "name": "jsx-node",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Use JSX as Node templating engine",
   "main": "index.js",
   "bin": {
