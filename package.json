@@ -30,7 +30,7 @@
     "babel-plugin-transform-react-jsx": "^6.22.0",
     "babel-preset-es2015-node6": "^0.4.0",
     "babylon": "^6.15.0",
-    "hyperscript-jsx": "0.0.2"
+    "hyperscript-jsx": "0.1.0"
   },
   "devDependencies": {
     "babel-cli": "^6.22.2",
