@@ -15,7 +15,7 @@ module.exports = function () {
         ) {
           const keys = Object.keys(state.opts);
 
-          const found = keys.find((key) => node.arguments[0].value.startsWith(key));
+          const found = keys.find((key) => node.arguments[0].value.split('/')[0] === key);
 
           if (found) {
             const pathArray = node.arguments[0].value.split('/').slice(1);
