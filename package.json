@@ -3,15 +3,10 @@
   "version": "0.1.7",
   "description": "Use JSX as Node templating engine",
   "main": "index.js",
-  "bin": {
-    "jsxc": "./bin/jsxc.js"
-  },
   "scripts": {
-    "clean": "rimraf *.js helpers/ babel/ bin/",
-    "build": "babel src --out-dir .",
-    "lint": "eslint src",
+    "lint": "eslint .",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepublish": "npm run lint && npm run clean && npm run build",
+    "prepublish": "npm run lint",
     "preversion": "npm run lint"
   },
   "repository": {
