@@ -3,6 +3,9 @@
   "version": "0.2.0",
   "description": "Use JSX as Node templating engine",
   "main": "index.js",
+  "bin": {
+    "jsxc": "bin/jsxc.js"
+  },
   "scripts": {
     "lint": "eslint .",
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -20,15 +23,13 @@
   },
   "homepage": "https://github.com/lohfu/jsx-node#readme",
   "dependencies": {
-    "babel-core": "^6.22.1",
-    "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-plugin-transform-react-jsx": "^6.22.0",
-    "babel-preset-es2015-node6": "^0.4.0",
-    "babylon": "^6.15.0",
     "hyperscript-jsx": "0.1.0"
   },
   "devDependencies": {
     "babel-cli": "^6.22.2",
+    "babel-core": "^6.22.1",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-transform-react-jsx": "^6.22.0",
     "babel-preset-es2015-node6": "^0.4.0",
     "babel-preset-es2016": "^6.22.0",
     "babel-preset-es2017": "^6.22.0",
