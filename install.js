@@ -4,8 +4,8 @@ const babel = require('babel-core');
 
 module.exports = function ({
   extension = '.jsx',
-  presets = ['es2015-node6'],
-  plugins = ['add-module-exports'],
+  presets = ['es2015-node6', 'es2016', 'es2017', 'stage-0'],
+  plugins = [],
   alias,
 } = {}) {
   if (extension.charAt(0) !== '.') {
@@ -21,9 +21,11 @@ module.exports = function ({
       presets,
       plugins: [
         ...plugins,
+        ['add-module-exports'],
         ['transform-react-jsx', { pragma: 'h' }],
-        ['jsx-node/babel/alias', alias],
-        ['jsx-node/babel/stringify'],
+        ['module-resolver', {
+          alias,
+        }],
       ],
     });
 
