@@ -21,7 +21,7 @@ module.exports = function ({
   require.extensions[extension] = (module, filename) => {
     const result = babel.transformFileSync(filename, {
       plugins: [
-        ['transform-react-jsx', { pragma: 'h' }],
+        ['@babel/transform-react-jsx', { pragma: 'h' }],
       ],
     })
 

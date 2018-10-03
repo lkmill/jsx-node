@@ -19,7 +19,7 @@ const result = babel.transformFileSync(filename, {
   presets: defaultOptions.presets,
   plugins: [
     ...defaultOptions.plugins,
-    ['transform-react-jsx', { pragma: 'h' }],
+    ['@babel/transform-react-jsx', { pragma: 'h' }],
   ],
 })
 
