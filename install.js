@@ -1,10 +1,10 @@
 'use strict';
 
-const babel = require('babel-core');
+const babel = require('@babel/core');
 
 module.exports = function ({
   extension = '.jsx',
-  presets = ['es2015-node6', 'es2016', 'es2017', 'stage-0'],
+  presets = [[ '@babel/preset-env', { shippedProposals: true } ]],
   plugins = [],
   alias,
 } = {}) {
@@ -18,14 +18,8 @@ module.exports = function ({
 
   require.extensions[extension] = (module, filename) => {
     const result = babel.transformFileSync(filename, {
-      presets,
       plugins: [
-        ...plugins,
-        ['add-module-exports'],
         ['transform-react-jsx', { pragma: 'h' }],
-        ['module-resolver', {
-          alias,
-        }],
       ],
     });
 

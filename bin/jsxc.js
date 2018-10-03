@@ -6,7 +6,7 @@ const babel = require('babel-core');
 
 const defaultOptions = {
   extension: '.jsx',
-  presets: ['es2015-node6', 'es2016', 'es2017', 'stage-0'],
+  presets: [[ '@babel/preset-env', { shippedProposals: true } ]],
   plugins: [
     'add-module-exports',
   ],
