@@ -1,12 +1,12 @@
-'use strict';
+'use strict'
 
 module.exports = class Component {
-  constructor(props) {
-    this.props = props;
-    this.state = {};
+  constructor (props) {
+    this.props = props
+    this.state = {}
   }
 
-  setState(obj) {
-    Object.assign(this.state, obj);
+  setState (obj) {
+    Object.assign(this.state, obj)
   }
-};
+}

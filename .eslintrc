@@ -1,26 +1,11 @@
 {
-  "extends": "airbnb-base",
-
-  "parserOptions": {
-    "sourceType": "strict"
-  },
-  
-  "env": {
-    "node": true
-  },
+  "extends": [ "standard" ],
 
   "rules": {
-    "arrow-parens": [2, "always"],
-    "func-names": 0,
-    "global-require": 0,
-    "import/no-unresolved": 0,
-    "no-console": [1, { "allow": ["warn", "error", "info"] }],
-    "no-empty": [2, { "allowEmptyCatch": true }],
-    "no-param-reassign": 0,
-    "no-shadow": 0,
-    "consistent-return": [2, { "treatUndefinedAsUnspecified": true }],
-    "no-void": 0,
-    "prefer-const": [2,{"destructuring": "all"}],
-    "import/no-extraneous-dependencies": 0
+    "comma-dangle": [ 2, "always-multiline" ]
+  },
+
+  "env": {
+    "browser": true
   }
 }

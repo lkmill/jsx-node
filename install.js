@@ -1,6 +1,6 @@
-'use strict';
+'use strict'
 
-const babel = require('@babel/core');
+const babel = require('@babel/core')
 
 module.exports = function ({
   extension = '.jsx',
@@ -9,21 +9,23 @@ module.exports = function ({
   alias,
 } = {}) {
   if (extension.charAt(0) !== '.') {
-    extension = `.${extension}`;
+    extension = `.${extension}`
   }
 
+  // eslint-disable-next-line node/no-deprecated-api
   if (require.extensions[extension]) {
-    return;
+    return
   }
 
+  // eslint-disable-next-line node/no-deprecated-api
   require.extensions[extension] = (module, filename) => {
     const result = babel.transformFileSync(filename, {
       plugins: [
         ['transform-react-jsx', { pragma: 'h' }],
       ],
-    });
+    })
 
     // eslint-disable-next-line no-underscore-dangle
-    module._compile(result.code, filename);
-  };
-};
+    module._compile(result.code, filename)
+  }
+}
